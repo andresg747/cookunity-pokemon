@@ -308,6 +308,10 @@
     {
       "packageName": "server",
       "projectFolder": "apps/server"
+    },
+    {
+      "packageName": "client",
+      "projectFolder": "apps/client"
     }
     // {
     //   /**
