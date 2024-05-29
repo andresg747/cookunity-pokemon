@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PokemonCardType {
+  Darkness
+  Fighting
+  Fire
+  Grass
+  Lightning
+  Metal
+  Psychic
+  Water
+}
+
+model PokemonCard {
+  id    Int               @id @default(autoincrement())
+  name  String
+  hp    Int
+  types PokemonCardType[]
+
+  weaknesses  Weakness[]
+  resistances Resistance[]
+}
+
+model Weakness {
+  id     Int             @id @default(autoincrement())
+  type   PokemonCardType
+  value  String
+  card   PokemonCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId Int
+}
+
+model Resistance {
+  id     Int             @id @default(autoincrement())
+  type   PokemonCardType
+  value  String
+  card   PokemonCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId Int
+}
