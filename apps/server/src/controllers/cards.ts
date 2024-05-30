@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../db/client";
-import { PokemonCardType } from "@prisma/client";
+import db, { PokemonCardType } from "../db";
 import { ValidationError } from "../errors/validation";
 import { includeWeaknessesAndResistances } from "../utils";
 
@@ -36,7 +35,7 @@ const CardsController = {
         throw new ValidationError("Invalid type", ["types"]);
       }
 
-      const newCard = await prisma.pokemonCard.create({
+      const newCard = await db.pokemonCard.create({
         data: {
           name,
           hp: parseInt(hp, 10),
@@ -73,7 +72,7 @@ const CardsController = {
   async getDetails(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const card = await prisma.pokemonCard.findUnique({
+      const card = await db.pokemonCard.findUnique({
         where: {
           id: parseInt(id),
         },
@@ -88,7 +87,7 @@ const CardsController = {
   // GET /api/cards - List all cards
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const cards = await prisma.pokemonCard.findMany({
+      const cards = await db.pokemonCard.findMany({
         include: includeWeaknessesAndResistances,
       });
       return res.json(cards);
@@ -102,11 +101,9 @@ const CardsController = {
     try {
       const { id } = req.params;
 
-      const { name, hp, types, weaknesses, resistances } = req.body;
-
       // TODO: validations for types, weaknesses, and resistances
 
-      const updatedCard = await prisma.pokemonCard.update({
+      const updatedCard = await db.pokemonCard.update({
         where: {
           id: parseInt(id),
         },
@@ -124,13 +121,66 @@ const CardsController = {
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      await prisma.pokemonCard.delete({
+      await db.pokemonCard.delete({
         where: {
           id: parseInt(id),
         },
       });
       return res.json({
         message: `Card with id ${id} has been deleted successfully.`,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // GET /api/cards/:id/analyze - Get card weaknesses and resistances
+  async analyze(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const card = await db.pokemonCard.findUnique({
+        where: {
+          id: parseInt(id),
+        },
+        include: includeWeaknessesAndResistances,
+      });
+
+      if (!card) {
+        return res.status(404).json({ error: "Card not found" });
+      }
+
+      // Extract the types from the weaknesses and resistances
+      const weaknesses = card.weaknesses.map((w) => ({
+        type: w.type,
+      }));
+
+      const resistances = card.resistances.map((r) => ({
+        type: r.type,
+      }));
+
+      // Search for other cards that have the same types as the weaknesses and resistances
+      const cardsWithWeaknesses = await db.pokemonCard.findMany({
+        where: {
+          types: {
+            hasSome: weaknesses.map((w) => w.type),
+          },
+        },
+      });
+
+      const cardsWithResistances = await db.pokemonCard.findMany({
+        where: {
+          types: {
+            hasSome: resistances.map((r) => r.type),
+          },
+        },
+      });
+
+      return res.json({
+        id: card.id,
+        name: card.name,
+        types: card.types,
+        weakAgainst: cardsWithWeaknesses,
+        resistantTo: cardsWithResistances,
       });
     } catch (error) {
       next(error);

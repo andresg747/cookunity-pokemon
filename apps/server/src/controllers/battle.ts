@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import db from "../db";
 import { includeWeaknessesAndResistances } from "../utils";
-
-const prisma = new PrismaClient();
 
 const BattleController = {
   // POST /api/battle -  Create a new battle
@@ -17,14 +15,14 @@ const BattleController = {
       // to calculate the outcome of the battle
       // first we get the attacker and defender cards from the database
 
-      const attackerCard = await prisma.pokemonCard.findUnique({
+      const attackerCard = await db.pokemonCard.findUnique({
         where: {
           id: attacker,
         },
         include: includeWeaknessesAndResistances,
       });
 
-      const defenderCard = await prisma.pokemonCard.findUnique({
+      const defenderCard = await db.pokemonCard.findUnique({
         where: {
           id: defender,
         },

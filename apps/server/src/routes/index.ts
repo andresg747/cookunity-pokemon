@@ -10,6 +10,7 @@ router.get("/cards/:id", CardController.getDetails);
 router.get("/cards", CardController.listAll);
 router.put("/cards/:id", CardController.update);
 router.delete("/cards/:id", CardController.delete);
+router.get("/cards/:id/analyze", CardController.analyze);
 
 // Battle routes
 router.post("/battle", BattleController.fight);
