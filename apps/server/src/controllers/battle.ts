@@ -70,6 +70,8 @@ const BattleController = {
 
 export default BattleController;
 
+// If you wonder why these functions below are here and not in a separate file,
+// check this principle I like to follow: https://kentcdodds.com/blog/colocation#the-principle
 function calculateWeaknessDamage(
   attackerTypes: string[],
   weaknesses: { type: string; value: string }[],
@@ -80,7 +82,6 @@ function calculateWeaknessDamage(
   for (const weakness of weaknesses) {
     if (attackerTypes.includes(weakness.type)) {
       // Multiply the damage by the weakness value
-      // For example, if the weakness value is 2, the damage is doubled
       const multiplier = parseFloat(weakness.value.replace("x", ""));
       damage *= multiplier;
     }
@@ -99,7 +100,6 @@ function calculateResistanceDamage(
   for (const resistance of resistances) {
     if (attackerTypes.includes(resistance.type)) {
       // Subtract the resistance value from the damage
-      // For example, if the resistance value is 20, subtract 20 from the damage
       const reduction = parseFloat(resistance.value.replace("-", ""));
       damage -= reduction;
     }
