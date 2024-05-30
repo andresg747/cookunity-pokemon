@@ -19,10 +19,11 @@ enum PokemonCardType {
 }
 
 model PokemonCard {
-  id    Int               @id @default(autoincrement())
-  name  String
-  hp    Int
-  types PokemonCardType[]
+  id         Int               @id @default(autoincrement())
+  name       String
+  hp         Int
+  baseDamage Int?
+  types      PokemonCardType[]
 
   weaknesses  Weakness[]
   resistances Resistance[]

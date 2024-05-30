@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../db/client";
 import { PokemonCardType } from "@prisma/client";
 import { ValidationError } from "../errors/validation";
+import { includeWeaknessesAndResistances } from "../utils";
+
+// TODO: BaseDamage on card creation
 
 const CardsController = {
   // POST /api/cards -  Create a new card
@@ -57,6 +60,7 @@ const CardsController = {
                 }
               : undefined,
         },
+        include: includeWeaknessesAndResistances,
       });
 
       return res.json(newCard);
@@ -73,6 +77,7 @@ const CardsController = {
         where: {
           id: parseInt(id),
         },
+        include: includeWeaknessesAndResistances,
       });
       return res.json(card);
     } catch (error) {
@@ -84,20 +89,7 @@ const CardsController = {
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
       const cards = await prisma.pokemonCard.findMany({
-        include: {
-          weaknesses: {
-            select: {
-              type: true,
-              value: true,
-            },
-          },
-          resistances: {
-            select: {
-              type: true,
-              value: true,
-            },
-          },
-        },
+        include: includeWeaknessesAndResistances,
       });
       return res.json(cards);
     } catch (error) {
@@ -118,29 +110,8 @@ const CardsController = {
         where: {
           id: parseInt(id),
         },
-        data: {
-          name,
-          hp: parseInt(hp, 10),
-          types,
-          weaknesses:
-            weaknesses && weaknesses.length > 0
-              ? {
-                  create: weaknesses.map((w) => ({
-                    type: w.type,
-                    value: w.value,
-                  })),
-                }
-              : undefined,
-          resistances:
-            resistances && resistances.length > 0
-              ? {
-                  create: resistances.map((r) => ({
-                    type: r.type,
-                    value: r.value,
-                  })),
-                }
-              : undefined,
-        },
+        data: req.body,
+        include: includeWeaknessesAndResistances,
       });
 
       return res.json(updatedCard);
