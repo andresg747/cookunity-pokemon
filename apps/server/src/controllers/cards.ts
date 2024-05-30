@@ -3,13 +3,11 @@ import db, { PokemonCardType } from "../db";
 import { ValidationError } from "../errors/validation";
 import { includeWeaknessesAndResistances } from "../utils";
 
-// TODO: BaseDamage on card creation
-
 const CardsController = {
   // POST /api/cards -  Create a new card
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, hp, types, weaknesses, resistances } = req.body;
+      const { name, hp, types, weaknesses, resistances, baseDamage } = req.body;
 
       if (!name || !hp || !types) {
         throw new ValidationError("Missing required fields", [
@@ -36,29 +34,7 @@ const CardsController = {
       }
 
       const newCard = await db.pokemonCard.create({
-        data: {
-          name,
-          hp: parseInt(hp, 10),
-          types,
-          weaknesses:
-            weaknesses && weaknesses.length > 0
-              ? {
-                  create: weaknesses.map((w) => ({
-                    type: w.type,
-                    value: w.value,
-                  })),
-                }
-              : undefined,
-          resistances:
-            resistances && resistances.length > 0
-              ? {
-                  create: resistances.map((r) => ({
-                    type: r.type,
-                    value: r.value,
-                  })),
-                }
-              : undefined,
-        },
+        data: prepareCardData(req.body),
         include: includeWeaknessesAndResistances,
       });
 
@@ -74,7 +50,7 @@ const CardsController = {
       const { id } = req.params;
       const card = await db.pokemonCard.findUnique({
         where: {
-          id: parseInt(id),
+          id,
         },
         include: includeWeaknessesAndResistances,
       });
@@ -101,13 +77,11 @@ const CardsController = {
     try {
       const { id } = req.params;
 
-      // TODO: validations for types, weaknesses, and resistances
-
       const updatedCard = await db.pokemonCard.update({
         where: {
-          id: parseInt(id),
+          id,
         },
-        data: req.body,
+        data: prepareCardData(req.body),
         include: includeWeaknessesAndResistances,
       });
 
@@ -123,7 +97,7 @@ const CardsController = {
       const { id } = req.params;
       await db.pokemonCard.delete({
         where: {
-          id: parseInt(id),
+          id,
         },
       });
       return res.json({
@@ -140,7 +114,7 @@ const CardsController = {
       const { id } = req.params;
       const card = await db.pokemonCard.findUnique({
         where: {
-          id: parseInt(id),
+          id,
         },
         include: includeWeaknessesAndResistances,
       });
@@ -189,3 +163,30 @@ const CardsController = {
 };
 
 export default CardsController;
+
+function prepareCardData(body) {
+  const { weaknesses, resistances, hp, ...rest } = body;
+
+  return {
+    ...rest,
+    hp: hp ? parseInt(hp, 10) : hp,
+    weaknesses:
+      weaknesses && weaknesses.length > 0
+        ? {
+            create: weaknesses.map((w) => ({
+              type: w.type,
+              value: w.value,
+            })),
+          }
+        : undefined,
+    resistances:
+      resistances && resistances.length > 0
+        ? {
+            create: resistances.map((r) => ({
+              type: r.type,
+              value: r.value,
+            })),
+          }
+        : undefined,
+  };
+}

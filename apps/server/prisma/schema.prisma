@@ -19,7 +19,7 @@ enum PokemonCardType {
 }
 
 model PokemonCard {
-  id         Int               @id @default(autoincrement())
+  id         String            @id @default(cuid())
   name       String
   hp         Int
   baseDamage Int?
@@ -30,17 +30,17 @@ model PokemonCard {
 }
 
 model Weakness {
-  id     Int             @id @default(autoincrement())
+  id     String          @id @default(cuid())
   type   PokemonCardType
   value  String
   card   PokemonCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
-  cardId Int
+  cardId String
 }
 
 model Resistance {
-  id     Int             @id @default(autoincrement())
+  id     String          @id @default(cuid())
   type   PokemonCardType
   value  String
   card   PokemonCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
-  cardId Int
+  cardId String
 }
