@@ -40,27 +40,48 @@ const BattleController = {
       const attackerTypes = attackerCard.types;
 
       let damage = attackerCard.baseDamage; // Set your base damage
+      let appliedMultipliers = [];
+      let appliedReductions = [];
 
       if (defenderCard.weaknesses && defenderCard.weaknesses.length > 0) {
-        damage = calculateWeaknessDamage(
-          attackerTypes,
-          defenderCard.weaknesses,
-          damage
-        );
+        const { damage: damageAfterWeakness, multipliers } =
+          calculateWeaknessDamage(
+            attackerTypes,
+            defenderCard.weaknesses,
+            damage
+          );
+        damage = damageAfterWeakness;
+        appliedMultipliers = multipliers;
       }
 
       if (defenderCard.resistances && defenderCard.resistances.length > 0) {
-        damage = calculateResistanceDamage(
-          attackerTypes,
-          defenderCard.resistances,
-          damage
-        );
+        const { damage: damageAfterResistance, reductions } =
+          calculateResistanceDamage(
+            attackerTypes,
+            defenderCard.resistances,
+            damage
+          );
+        damage = damageAfterResistance;
+        appliedReductions = reductions;
       }
 
+      const battleSummary = {
+        attacker: attackerCard,
+        defender: defenderCard,
+        appliedMultipliers,
+        appliedReductions,
+      };
+
       if (damage >= defenderCard.hp) {
-        return res.json({ succeeded: true });
+        return res.json({
+          succeeded: true,
+          battleSummary,
+        });
       } else {
-        return res.json({ succeeded: false });
+        return res.json({
+          succeeded: false,
+          battleSummary,
+        });
       }
     } catch (error) {
       next(error);
@@ -76,34 +97,38 @@ function calculateWeaknessDamage(
   attackerTypes: string[],
   weaknesses: { type: string; value: string }[],
   baseDamage: number
-): number {
+): { damage: number; multipliers: string[] } {
   let damage = baseDamage;
+  let multipliers: string[] = [];
 
   for (const weakness of weaknesses) {
     if (attackerTypes.includes(weakness.type)) {
       // Multiply the damage by the weakness value
-      const multiplier = parseFloat(weakness.value.replace("x", ""));
+      const multiplier = parseFloat(weakness.value.replace("×", ""));
       damage *= multiplier;
+      multipliers.push(weakness.value);
     }
   }
 
-  return damage;
+  return { damage, multipliers };
 }
 
 function calculateResistanceDamage(
   attackerTypes: string[],
   resistances: { type: string; value: string }[],
   baseDamage: number
-): number {
+): { damage: number; reductions: string[] } {
   let damage = baseDamage;
+  let reductions: string[] = [];
 
   for (const resistance of resistances) {
     if (attackerTypes.includes(resistance.type)) {
       // Subtract the resistance value from the damage
       const reduction = parseFloat(resistance.value.replace("-", ""));
       damage -= reduction;
+      reductions.push(resistance.value);
     }
   }
 
-  return damage;
+  return { damage, reductions };
 }
