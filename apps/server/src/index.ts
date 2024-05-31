@@ -5,18 +5,24 @@ import cors from "cors";
 import { Application } from "express";
 import apiRoutes from "./routes";
 import { ValidationError } from "./errors/validation";
+import { loggerMiddleware } from "./middlewares/logger";
 
 const app: Application = express();
 app.use(express.json());
 
+// Load environment variables
 dotenv.config({ path: path.resolve(__dirname, "./config/.env") });
 
+// CORS middleware
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
 );
+
+// Logger middleware
+app.use(loggerMiddleware);
 
 // Define the API routes
 app.use("/api", apiRoutes);
