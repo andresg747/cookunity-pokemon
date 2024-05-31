@@ -128,7 +128,7 @@ body#root[data-scroll-locked] {
 .battle-background {
   background-image: url(/images/stadium.jpeg);
   background-size: cover;
-  height: 500px;
+  height: 600px;
   position: absolute;
   z-index: -1;
   background-position: center;

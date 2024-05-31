@@ -27,7 +27,7 @@ export default function RootLayout({
           position: "relative",
         }}
         className={cn(
-          "min-h-screen bg-background font-sans antialiased max-w-7xl m-auto mt-8",
+          "bg-background font-sans antialiased max-w-7xl m-auto mt-8",
           fontSans.variable
         )}
       >

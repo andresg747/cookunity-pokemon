@@ -1,12 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import db from "../db";
+import { PokemonCardType } from "@prisma/client";
 import { includeWeaknessesAndResistances } from "../utils";
+import {
+  BattleResponse,
+  BattleRequest,
+  BattleSummary,
+} from "@ag-cookunity/types";
 
 const BattleController = {
   // POST /api/battle -  Create a new battle
-  async fight(req: Request, res: Response, next: NextFunction) {
+  async fight(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<BattleResponse>> {
     try {
-      const { attacker, defender } = req.body;
+      const { attacker, defender } = <BattleRequest>req.body;
 
       if (!attacker || !defender) {
         return res.status(400).json({ error: "Missing required fields" });
@@ -68,9 +78,11 @@ const BattleController = {
       const battleSummary = {
         attacker: attackerCard,
         defender: defenderCard,
+        totalDamage: damage,
+        opponentLeftHp: Math.max(0, defenderCard.hp - damage),
         appliedMultipliers,
         appliedReductions,
-      };
+      } as BattleSummary;
 
       if (damage >= defenderCard.hp) {
         return res.json({

@@ -34,3 +34,22 @@ export type Resistance = {
   card: PokemonCard;
   cardId: string;
 };
+
+export type BattleSummary = {
+  attacker: PokemonCard;
+  defender: PokemonCard;
+  totalDamage: number;
+  opponentLeftHp: number;
+  appliedMultipliers: string[];
+  appliedReductions: string[];
+};
+
+export type BattleRequest = {
+  attacker: string;
+  defender: string;
+};
+
+export type BattleResponse = {
+  succeeded: boolean;
+  battleSummary: BattleSummary;
+};
