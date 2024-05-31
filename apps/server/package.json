@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "@ag-cookunity/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "PORT=3001 nodemon src/index.ts",
+    "dev": "prisma generate && PORT=3001 nodemon src/index.ts",
     "build": "tsc -p .",
     "prisma:generate": "npx prisma generate"
   },
@@ -20,7 +20,8 @@
     "swagger-ui-express": "~5.0.0",
     "swagger-jsdoc": "~6.2.8",
     "morgan": "~1.10.0",
-    "winston": "~3.13.0"
+    "winston": "~3.13.0",
+    "openapi-types": ">=7"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

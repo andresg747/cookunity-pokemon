@@ -306,15 +306,15 @@
    */
   "projects": [
     {
-      "packageName": "server",
+      "packageName": "@ag-cookunity/server",
       "projectFolder": "apps/server"
     },
     {
-      "packageName": "client",
+      "packageName": "@ag-cookunity/client",
       "projectFolder": "apps/client"
     },
     {
-      "packageName": "types",
+      "packageName": "@ag-cookunity/types",
       "projectFolder": "apps/types"
     }
     // {
