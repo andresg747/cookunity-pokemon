@@ -17,8 +17,10 @@ import { PokemonCard } from "@ag-cookunity/types";
 import CardSelector from "@/components/card-selector";
 import { useCards } from "@/hooks/use-cards";
 import useSound from "@/hooks/use-sound";
+import { VolumeIcon, VolumeXIcon } from "lucide-react";
 
 function HomePageComponent() {
+  const [mute, setMute] = useState(false);
   const audio = useSound("/sounds/battle.mp3");
 
   const [open, setOpen] = useState(false);
@@ -58,7 +60,26 @@ function HomePageComponent() {
               <div className="battle-background w-full h-full"></div>
 
               <DrawerHeader>
-                <DrawerTitle className="font-semibold text-white text-3xl drop-shadow-xl text-center">
+                <Button
+                  onClick={() => {
+                    if (mute) {
+                      audio.muted = false;
+                      setMute(false);
+                    } else {
+                      audio.muted = true;
+                      setMute(true);
+                    }
+                  }}
+                  className="bg-white opacity-80 w-14"
+                  variant="ghost"
+                >
+                  {mute ? (
+                    <VolumeIcon className="text-slate-900 text-md" />
+                  ) : (
+                    <VolumeXIcon className="text-slate-900 text-md" />
+                  )}
+                </Button>
+                <DrawerTitle className="font-semibold text-white text-3xl text-center drop-shadow-md">
                   BATTLE MODE
                 </DrawerTitle>
                 <div className="mt-6 h-[350px] min-w-[900px] mx-auto">
