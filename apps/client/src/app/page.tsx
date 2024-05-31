@@ -67,7 +67,7 @@ function HomePageComponent() {
         defender: selectedOpponent.id,
       });
       setBattleOutcome({
-        text: fightSummary.succeeded ? "You won!" : "You lost!",
+        text: fightSummary.succeeded ? "Attack succeeded!" : "Attack failed!",
         battleSummary: fightSummary.battleSummary,
       });
     }
