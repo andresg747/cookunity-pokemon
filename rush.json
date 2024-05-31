@@ -312,6 +312,10 @@
     {
       "packageName": "client",
       "projectFolder": "apps/client"
+    },
+    {
+      "packageName": "types",
+      "projectFolder": "apps/types"
     }
     // {
     //   /**
