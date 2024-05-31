@@ -1,13 +1,23 @@
 "use client";
 
-import { useCards } from "@/queries/use-cards";
-import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import PokemonCardImage from "./card-image";
+import { PokemonCard } from "@ag-cookunity/types";
 
-export default function CardList({ className }: { className?: string }) {
-  const { data: cards, isLoading, isError } = useCards();
-
+export default function CardList({
+  onCardSelected,
+  className,
+  cards,
+  isError,
+  isLoading,
+}: {
+  onCardSelected: (card: any) => void;
+  className?: string;
+  cards: PokemonCard[];
+  isError: boolean;
+  isLoading: boolean;
+}) {
   if (isError) return <div>Error</div>;
   if (isLoading)
     return (
@@ -32,20 +42,15 @@ export default function CardList({ className }: { className?: string }) {
     >
       {cards &&
         cards.map((card: any) => {
-          const [setId, setNumber] = card.id.split("-");
           return (
             <div
               key={card.id}
+              onClick={() => {
+                onCardSelected(card);
+              }}
               className="overflow-hidden cursor-pointer hover:shadow-xl ease-in-out hover:-translate-y-1 transform  rounded-xl bg-white shadow-md transition duration-150 hover:scale-105 hover:border-transparent border-2 border-gray-200"
             >
-              <div className="bg-cover bg-center">
-                <Image
-                  src={`https://images.pokemontcg.io/${setId}/${setNumber}_hires.png`}
-                  width={230}
-                  height={320}
-                  alt={`Pokemon card - ${card.name}`}
-                />
-              </div>
+              <PokemonCardImage card={card} />
             </div>
           );
         })}

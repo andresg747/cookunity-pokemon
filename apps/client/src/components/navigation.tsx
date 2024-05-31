@@ -14,7 +14,7 @@ export default function Navigation() {
             width={200}
             height={72}
           />
-          <h2 className="text-3xl text-red-500">App</h2>
+          <h2 className="text-3xl text-red-600">App</h2>
         </a>
       </div>
     </nav>

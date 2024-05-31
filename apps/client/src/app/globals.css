@@ -111,3 +111,26 @@
 
   background-image: radial-gradient(circle at 50% -20%, #ffffff22, #0000000f);
 }
+
+/* 
+  Little hack for maintaining the body in its position while
+   the drawer component is open. I'm still not sure why do they arbitrarily
+   modify these properties:
+   https://github.com/emilkowalski/vaul/blob/40d3a69825df25e04ffe1e52c99c3461d785f31a/src/use-prevent-scroll.ts#L121
+*/
+body#root[data-scroll-locked] {
+  padding: unset !important;
+  margin-top: 2rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.battle-background {
+  background-image: url(/images/stadium.jpeg);
+  background-size: cover;
+  height: 500px;
+  position: absolute;
+  z-index: -1;
+  background-position: center;
+  opacity: 0.7;
+}
