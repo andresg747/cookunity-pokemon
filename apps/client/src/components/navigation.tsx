@@ -1,8 +1,17 @@
 import Image from "next/image";
+import { Input } from "./ui/input";
+import { useContext } from "react";
+import { FilterContext } from "@/hooks/context/filter";
 
 export default function Navigation() {
+  const { filter, setFilter } = useContext(FilterContext);
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
   return (
-    <nav className="flex h-24 border-slate-200">
+    <nav className="flex items-center h-24 border-slate-200 space-x-10">
       <div className="flex items-center justify-center">
         <a
           href="/"
@@ -16,6 +25,15 @@ export default function Navigation() {
           />
           <h2 className="text-3xl text-red-600">App</h2>
         </a>
+      </div>
+
+      <div>
+        <Input
+          value={filter}
+          onChange={handleFilterChange}
+          placeholder="Search by name"
+          className="min-w-[300px]"
+        />
       </div>
     </nav>
   );
