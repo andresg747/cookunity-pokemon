@@ -13,13 +13,14 @@
    <span style="margin-left: 0;text-align: center;position: absolute;color: #000;height: unset;">Pokemon App</span>
    </h2>
    <br>
+<div align="center">
     <img src="https://img.shields.io/badge/Node.js-20.13.1-green" alt="Node.js version">
-    <img src="https://img.shields.io/badge/React-17.0.2-blue" alt="React version">
-    <img src="https://img.shields.io/badge/Next.js-11.1.2-blue" alt="Next.js version">
-    <img src="https://img.shields.io/badge/Prisma-3.8.1-blue" alt="Prisma version">
-    <img src="https://img.shields.io/badge/PostgreSQL-13.3-blue" alt="PostgreSQL version">
-    <!-- Made with love by AG -->
+    <img src="https://img.shields.io/badge/React-^18-blue" alt="React version">
+    <img src="https://img.shields.io/badge/Next.js-14.2.3-blue" alt="Next.js version">
+    <img src="https://img.shields.io/badge/Prisma-5.14.0-blue" alt="Prisma version">
+    <img src="https://img.shields.io/badge/PostgreSQL-16.3-blue" alt="PostgreSQL version">
     <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4%EF%B8%8F%20%20-by%20AG-ffc84e" alt="Made with love by AG">
+    </div>
 
 ## Server
 
