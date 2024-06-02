@@ -19,9 +19,11 @@ import { VolumeIcon, VolumeXIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
+const SOUND_COOKIE_NAME = "mute-sound";
+
 function HomePageComponent() {
-  const [cookies, setCookie] = useCookies(["mute-sound"]);
-  const [mute, setMute] = useState(cookies["mute-sound"]);
+  const [cookies, setCookie] = useCookies([SOUND_COOKIE_NAME]);
+  const [mute, setMute] = useState(cookies[SOUND_COOKIE_NAME]);
 
   const [battleOutcome, setBattleOutcome] = useState<
     | {
@@ -51,7 +53,7 @@ function HomePageComponent() {
       audio.muted = false;
     }
     if (open) {
-      audio.volume = 0.01;
+      audio.volume = 0.02;
       audio.play();
     } else {
       audio.pause();
@@ -73,7 +75,7 @@ function HomePageComponent() {
   };
 
   useEffect(() => {
-    setCookie("mute-sound", mute.toString(), { path: "/" });
+    setCookie(SOUND_COOKIE_NAME, mute.toString(), { path: "/" });
   }, [mute, setCookie]);
 
   return (
