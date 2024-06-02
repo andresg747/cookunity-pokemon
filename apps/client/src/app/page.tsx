@@ -21,7 +21,6 @@ import { useCookies } from "react-cookie";
 
 function HomePageComponent() {
   const [cookies, setCookie] = useCookies(["mute-sound"]);
-  console.log(cookies);
   const [mute, setMute] = useState(cookies["mute-sound"]);
 
   const [battleOutcome, setBattleOutcome] = useState<
@@ -74,7 +73,6 @@ function HomePageComponent() {
   };
 
   useEffect(() => {
-    console.log("Mute sound", mute);
     setCookie("mute-sound", mute.toString(), { path: "/" });
   }, [mute, setCookie]);
 

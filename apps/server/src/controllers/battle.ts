@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import db from "../db";
-import { PokemonCardType } from "@prisma/client";
 import { includeWeaknessesAndResistances } from "../utils";
 import {
   BattleResponse,
@@ -14,7 +13,7 @@ const BattleController = {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<Response<BattleResponse>> {
+  ): Promise<Response<BattleResponse> | void> {
     try {
       const { attacker, defender } = <BattleRequest>req.body;
 
@@ -49,9 +48,9 @@ const BattleController = {
       // look up the types of the attacker and defender cards
       const attackerTypes = attackerCard.types;
 
-      let damage = attackerCard.baseDamage; // Set your base damage
-      let appliedMultipliers = [];
-      let appliedReductions = [];
+      let damage = attackerCard.baseDamage!;
+      let appliedMultipliers: string[] = [];
+      let appliedReductions: string[] = [];
 
       if (defenderCard.weaknesses && defenderCard.weaknesses.length > 0) {
         const { damage: damageAfterWeakness, multipliers } =
@@ -96,7 +95,7 @@ const BattleController = {
         });
       }
     } catch (error) {
-      next(error);
+      return next(error);
     }
   },
 };

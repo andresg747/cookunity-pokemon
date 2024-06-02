@@ -14,8 +14,5 @@ export const useFight = () => {
     onError: (error: Error) => {
       console.error(error);
     },
-    onSuccess: (data) => {
-      console.log("Fight successful", data);
-    }
   });
 };

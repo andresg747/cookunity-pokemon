@@ -3,11 +3,35 @@ import db, { PokemonCardType } from "../db";
 import { ValidationError } from "../errors/validation";
 import { includeWeaknessesAndResistances } from "../utils";
 
+type PokemonCardCreateRequest = {
+  name: string;
+  hp: number | string;
+  types: PokemonCardType[];
+  weaknesses?: { type: PokemonCardType; value: string }[];
+  resistances?: { type: PokemonCardType; value: string }[];
+  baseDamage: number;
+};
+
+type PokemonCardCreate = Omit<
+  PokemonCardCreateRequest,
+  "hp" | "weaknesses" | "resistances"
+> & {
+  hp: number;
+  weaknesses?: {
+    create: { type: PokemonCardType; value: string }[];
+  };
+  resistances?: {
+    create: { type: PokemonCardType; value: string }[];
+  };
+};
+
 const CardsController = {
   // POST /api/cards -  Create a new card
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, hp, types, weaknesses, resistances, baseDamage } = req.body;
+      const { name, hp, types, weaknesses, resistances, baseDamage } = <
+        PokemonCardCreateRequest
+      >req.body;
 
       if (!name || !hp || !types) {
         throw new ValidationError("Missing required fields", [
@@ -21,15 +45,33 @@ const CardsController = {
         throw new ValidationError("Types must be a non-empty array", ["types"]);
       }
 
-      if (weaknesses && weaknesses.some((w) => !PokemonCardType[w.type])) {
+      if (!baseDamage || isNaN(baseDamage)) {
+        throw new ValidationError("Invalid base damage", ["baseDamage"]);
+      }
+
+      if (
+        weaknesses &&
+        weaknesses.some(
+          (w: { type: PokemonCardType }) => !PokemonCardType[w.type]
+        )
+      ) {
         throw new ValidationError("Invalid weakness type", ["weaknesses"]);
       }
 
-      if (resistances && resistances.some((r) => !PokemonCardType[r.type])) {
+      if (
+        resistances &&
+        resistances.some(
+          (r: { type: PokemonCardType }) => !PokemonCardType[r.type]
+        )
+      ) {
         throw new ValidationError("Invalid resistance type", ["resistances"]);
       }
 
-      if (types.some((t) => typeof t !== "string" || !PokemonCardType[t])) {
+      if (
+        types.some(
+          (t: PokemonCardType) => typeof t !== "string" || !PokemonCardType[t]
+        )
+      ) {
         throw new ValidationError("Invalid type", ["types"]);
       }
 
@@ -38,7 +80,7 @@ const CardsController = {
         include: includeWeaknessesAndResistances,
       });
 
-      return res.json(newCard);
+      return res.status(201).json(newCard);
     } catch (error) {
       next(error);
     }
@@ -164,28 +206,41 @@ const CardsController = {
 
 export default CardsController;
 
-function prepareCardData(body) {
-  const { weaknesses, resistances, hp, ...rest } = body;
+function prepareCardData(body: PokemonCardCreateRequest): PokemonCardCreate {
+  const { weaknesses, resistances, hp, name, baseDamage } = body;
+
+  let hpValue: number;
+  if (typeof hp === "string") {
+    hpValue = parseInt(hp, 10);
+  } else {
+    hpValue = hp;
+  }
 
   return {
-    ...rest,
-    hp: hp ? parseInt(hp, 10) : hp,
+    name,
+    baseDamage,
+    hp: hpValue,
+    types: body.types,
     weaknesses:
       weaknesses && weaknesses.length > 0
         ? {
-            create: weaknesses.map((w) => ({
-              type: w.type,
-              value: w.value,
-            })),
+            create: weaknesses.map(
+              (w: { type: PokemonCardType; value: string }) => ({
+                type: w.type,
+                value: w.value,
+              })
+            ),
           }
         : undefined,
     resistances:
       resistances && resistances.length > 0
         ? {
-            create: resistances.map((r) => ({
-              type: r.type,
-              value: r.value,
-            })),
+            create: resistances.map(
+              (r: { type: PokemonCardType; value: string }) => ({
+                type: r.type,
+                value: r.value,
+              })
+            ),
           }
         : undefined,
   };

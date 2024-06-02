@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
@@ -28,7 +28,7 @@ app.use(loggerMiddleware);
 app.use("/api", apiRoutes);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   // Here we usually log the error to a file or a service like Sentry or New Relic
   // to keep track of the errors that happen in our application in production
   console.error(err);
@@ -40,6 +40,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error" });
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`server is listening on port ${PORT}`));
+export default app;
