@@ -5,14 +5,16 @@ import BattleController from "../controllers/battle";
 const router = Router();
 
 // Cards routes
-router.post("/cards", CardController.create);
-router.get("/cards/:id", CardController.getDetails);
-router.get("/cards", CardController.listAll);
-router.put("/cards/:id", CardController.update);
-router.delete("/cards/:id", CardController.delete);
-router.get("/cards/:id/analyze", CardController.analyze);
+const cardController = new CardController();
+router.post("/cards", cardController.create);
+router.get("/cards/:id", cardController.getDetails);
+router.get("/cards", cardController.listAll);
+router.put("/cards/:id", cardController.update);
+router.delete("/cards/:id", cardController.delete);
+router.get("/cards/:id/analyze", cardController.analyze);
 
 // Battle routes
-router.post("/battle", BattleController.fight);
+const battleController = new BattleController();
+router.post("/battle", battleController.fight);
 
 export default router;

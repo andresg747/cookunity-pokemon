@@ -22,13 +22,45 @@
     <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4%EF%B8%8F%20%20-by%20AG-ffc84e" alt="Made with love by AG">
     </div>
 
+## Description
+
+This is a full-stack application that uses Node.js, Express.js, Prisma, PostgreSQL, React, and Next.js, configured as monorepo using Microsoft's Rush.
+
+The server is a REST API that interacts with a PostgreSQL database using Prisma. The client is a Next.js application that fetches data from the server and displays it in the UI.
+
+## Features
+
+- Create, Read, Update, and Delete Pokemon
+- List all Pokemon
+- List Pokemon weaknesses and resistances
+- Pokemon battle simulation
+- Swagger documentation for API endpoints
+- Unit / Integration tests for API endpoints and utility functions
+
+## Requirements
+
+- Node.js `> v18.0.0`
+- @microsoft/rush v5.0.0
+  - Install using `npm install -g @microsoft/rush`
+- Docker
+
+## Installation
+
+1. Clone the repository
+2. Navigate to the `app` folder
+3. Run the command `rush install && rush build`
+
+#### Troubleshooting
+
+- If you encounter any issues with the `rush` command, try running a clean install using the command `rush update --purge --full && rush build`
+
 ## Server
 
 It is a Node.js server that uses Express.js to create the API endpoints and Prisma to interact with the PostgreSQL database.
 
 ### How to run the server
 
-1. Run the command `npm run dev` in the `app/server` folder
+1. In a new terminal window, run the command `npm run dev` in the `app/server` folder
 2. Wait for the server to start
 3. The server will be running on `http://localhost:3001`
 
@@ -59,6 +91,6 @@ The client is a `Next.js` application that uses `React` to create the UI compone
 
 ### How to run the client
 
-1. Run the command `npm run dev` in the `app/client` folder
+1. In a new terminal window, run the command `npm run dev` in the `app/client` folder
 2. Wait for the client to start
 3. The client will be running on `http://localhost:3000`

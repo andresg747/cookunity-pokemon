@@ -4,6 +4,7 @@ import { ValidationError } from "../errors/validation";
 import { includeWeaknessesAndResistances } from "../utils";
 
 type PokemonCardCreateRequest = {
+  id: string;
   name: string;
   hp: number | string;
   types: PokemonCardType[];
@@ -25,9 +26,13 @@ type PokemonCardCreate = Omit<
   };
 };
 
-const CardsController = {
+export class CardsController {
   // POST /api/cards -  Create a new card
-  async create(req: Request, res: Response, next: NextFunction) {
+  public async create(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | void> {
     try {
       const { name, hp, types, weaknesses, resistances, baseDamage } = <
         PokemonCardCreateRequest
@@ -84,10 +89,14 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   // GET /api/cards/:id - Get card details
-  async getDetails(req: Request, res: Response, next: NextFunction) {
+  public async getDetails(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | void> {
     try {
       const { id } = req.params;
       const card = await db.pokemonCard.findUnique({
@@ -100,10 +109,14 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   // GET /api/cards - List all cards
-  async listAll(req: Request, res: Response, next: NextFunction) {
+  public async listAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | void> {
     try {
       const cards = await db.pokemonCard.findMany({
         include: includeWeaknessesAndResistances,
@@ -112,10 +125,10 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   // PUT /api/cards/:id - Update a card
-  async update(req: Request, res: Response, next: NextFunction) {
+  public async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
@@ -131,10 +144,10 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   // DELETE /api/cards/:id - Delete a card
-  async delete(req: Request, res: Response, next: NextFunction) {
+  public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       await db.pokemonCard.delete({
@@ -148,10 +161,10 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   // GET /api/cards/:id/analyze - Get card weaknesses and resistances
-  async analyze(req: Request, res: Response, next: NextFunction) {
+  public async analyze(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       const card = await db.pokemonCard.findUnique({
@@ -201,8 +214,8 @@ const CardsController = {
     } catch (error) {
       next(error);
     }
-  },
-};
+  }
+}
 
 export default CardsController;
 
@@ -217,6 +230,7 @@ function prepareCardData(body: PokemonCardCreateRequest): PokemonCardCreate {
   }
 
   return {
+    id: body.id,
     name,
     baseDamage,
     hp: hpValue,

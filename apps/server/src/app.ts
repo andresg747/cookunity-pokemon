@@ -6,12 +6,25 @@ import { Application } from "express";
 import apiRoutes from "./routes";
 import { ValidationError } from "./errors/validation";
 import { loggerMiddleware } from "./middlewares/logger";
+import swaggerUi from "swagger-ui-express";
+import YAML from 'yamljs';
 
 const app: Application = express();
 app.use(express.json());
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, "./config/.env") });
+
+// Swagger middleware
+// Load the Swagger YAML file
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use(express.static("public"));
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 
 // CORS middleware
 app.use(

@@ -29,8 +29,6 @@ beforeAll(async () => {
       },
     },
   });
-
-  console.log("✨ One card successfully created!");
 });
 
 afterAll(async () => {

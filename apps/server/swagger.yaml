@@ -1,0 +1,431 @@
+openapi: 3.0.0
+info:
+  title: Pokemon Battle API
+  version: 1.0.0
+  description: API for managing Pokémon cards and battles.
+
+servers:
+  - url: http://localhost:3001
+
+paths:
+  /api/cards:
+    post:
+      summary: Create a new Pokémon card
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "12345"
+                name:
+                  type: string
+                  example: "Pikachu"
+                hp:
+                  type: integer
+                  example: 100
+                types:
+                  type: array
+                  items:
+                    type: string
+                  example: ["Electric"]
+                weaknesses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: "Ground"
+                      value:
+                        type: string
+                        example: "×2"
+                resistances:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: "Flying"
+                      value:
+                        type: string
+                        example: "-30"
+                baseDamage:
+                  type: integer
+                  example: 50
+      responses:
+        "201":
+          description: Card created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: "12345"
+                  name: "Pikachu"
+                  hp: 100
+                  types: ["Electric"]
+                  weaknesses:
+                    - type: "Ground"
+                      value: "×2"
+                  resistances:
+                    - type: "Flying"
+                      value: "-30"
+                  baseDamage: 50
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Missing required fields"
+                  details: ["name", "hp", "types"]
+        "500":
+          description: Internal Server Error
+
+    get:
+      summary: List all Pokémon cards
+      responses:
+        "200":
+          description: A list of Pokémon cards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    hp:
+                      type: integer
+                    types:
+                      type: array
+                      items:
+                        type: string
+                    weaknesses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          value:
+                            type: string
+                    resistances:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          value:
+                            type: string
+                    baseDamage:
+                      type: integer
+                example:
+                  - id: "12345"
+                    name: "Pikachu"
+                    hp: 100
+                    types: ["Electric"]
+                    weaknesses:
+                      - type: "Ground"
+                        value: "×2"
+                    resistances:
+                      - type: "Flying"
+                        value: "-30"
+                    baseDamage: 50
+        "500":
+          description: Internal Server Error
+
+  /api/cards/{id}:
+    get:
+      summary: Get details of a specific Pokémon card
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: Card details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: "12345"
+                  name: "Pikachu"
+                  hp: 100
+                  types: ["Electric"]
+                  weaknesses:
+                    - type: "Ground"
+                      value: "×2"
+                  resistances:
+                    - type: "Flying"
+                      value: "-30"
+                  baseDamage: 50
+        "404":
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Card not found"
+        "500":
+          description: Internal Server Error
+
+    put:
+      summary: Update a Pokémon card
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "12345"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Pikachu"
+                hp:
+                  type: integer
+                  example: 100
+                types:
+                  type: array
+                  items:
+                    type: string
+                  example: ["Electric"]
+                weaknesses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: "Ground"
+                      value:
+                        type: string
+                        example: "×2"
+                resistances:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: "Flying"
+                      value:
+                        type: string
+                        example: "-30"
+                baseDamage:
+                  type: integer
+                  example: 50
+      responses:
+        "200":
+          description: Card updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: "12345"
+                  name: "Pikachu"
+                  hp: 100
+                  types: ["Electric"]
+                  weaknesses:
+                    - type: "Ground"
+                      value: "×2"
+                  resistances:
+                    - type: "Flying"
+                      value: "-30"
+                  baseDamage: 50
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Invalid type"
+                  details: ["types"]
+        "500":
+          description: Internal Server Error
+
+    delete:
+      summary: Delete a Pokémon card
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: Card deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "Card with id 12345 has been deleted successfully."
+        "500":
+          description: Internal Server Error
+
+  /api/cards/{id}/analyze:
+    get:
+      summary: Analyze weaknesses and resistances of a specific Pokémon card
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: Card analysis retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  types:
+                    type: array
+                    items:
+                      type: string
+                  weakAgainst:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        hp:
+                          type: integer
+                        types:
+                          type: array
+                          items:
+                            type: string
+                  resistantTo:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        hp:
+                          type: integer
+                        types:
+                          type: array
+                          items:
+                            type: string
+                example:
+                  id: "12345"
+                  name: "Pikachu"
+                  types: ["Electric"]
+                  weakAgainst:
+                    - id: "67890"
+                      name: "Diglett"
+                      hp: 50
+                      types: ["Ground"]
+                  resistantTo:
+                    - id: "54321"
+                      name: "Pidgey"
+                      hp: 40
+                      types: ["Flying"]
+        "404":
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Card not found"
+        "500":
+          description: Internal Server Error
+
+  /api/battle:
+    post:
+      summary: Create a new battle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attacker:
+                  type: string
+                  example: "12345"
+                defender:
+                  type: string
+                  example: "67890"
+      responses:
+        "200":
+          description: Battle result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  succeeded:
+                    type: boolean
+                  battleSummary:
+                    type: object
+                    properties:
+                      attacker:
+                        type: string
+                      defender:
+                        type: string
+                      winner:
+                        type: string
+                      log:
+                        type: array
+                        items:
+                          type: string
+                example:
+                  succeeded: true
+                  battleSummary:
+                    attacker: "12345"
+                    defender: "67890"
+                    winner: "12345"
+                    log:
+                      - "Pikachu used Thunderbolt"
+                      - "It's super effective!"
+                      - "Diglett fainted"
+        "404":
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Card not found"
+        "500":
+          description: Internal Server Error

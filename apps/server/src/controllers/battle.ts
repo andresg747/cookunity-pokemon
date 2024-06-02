@@ -7,9 +7,9 @@ import {
   BattleSummary,
 } from "@ag-cookunity/types";
 
-const BattleController = {
+export class BattleController {
   // POST /api/battle -  Create a new battle
-  async fight(
+  public async fight(
     req: Request,
     res: Response,
     next: NextFunction
@@ -97,14 +97,14 @@ const BattleController = {
     } catch (error) {
       return next(error);
     }
-  },
-};
+  }
+}
 
 export default BattleController;
 
 // If you wonder why these functions below are here and not in a separate file,
 // check this principle I like to follow: https://kentcdodds.com/blog/colocation#the-principle
-function calculateWeaknessDamage(
+export function calculateWeaknessDamage(
   attackerTypes: string[],
   weaknesses: { type: string; value: string }[],
   baseDamage: number
@@ -124,7 +124,7 @@ function calculateWeaknessDamage(
   return { damage, multipliers };
 }
 
-function calculateResistanceDamage(
+export function calculateResistanceDamage(
   attackerTypes: string[],
   resistances: { type: string; value: string }[],
   baseDamage: number
