@@ -30,13 +30,20 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 
 ## Features
 
-- Create, Read, Update, and Delete Pokemon
-- List all Pokemon
-- List Pokemon weaknesses and resistances
-- Pokemon battle simulation
-- Swagger documentation for API endpoints
-- Unit / Integration tests for API endpoints and utility functions
-- Filter Pokemon by name and type in the client
+- API:
+  - Create, Read, Update, and Delete Pokemon
+  - List all Pokemon with pagination
+  - List Pokemon weaknesses and resistances
+  - Pokemon battle simulation
+  - Swagger documentation
+  - Unit / Integration tests for endpoints and utility functions
+
+- Client:
+  - List all Pokemon
+  - Filter Pokemon by name and type in the client
+  - Select a Pokemon to view its details
+  - Battle mode to simulate a battle between two Pokemon
+
 
 ## Requirements
 
