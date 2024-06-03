@@ -41,6 +41,7 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 - [@microsoft/rush](https://rushjs.io/pages/intro/get_started/) v5.0.0
   - Install using `npm install -g @microsoft/rush`
 - [Docker](https://docs.docker.com/get-docker/)
+- Unix-based system (Linux, macOS, WSL) as some commands rely heavily on Unix
 
 ## Installation
 
