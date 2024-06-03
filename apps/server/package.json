@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "dotenv -e .env.production node dist/server.js",
+    "build": "npm run prisma:migrate:prod && prisma generate && dotenv -e .env.production tsc -p .",
     "dev": "prisma generate && PORT=3001 nodemon src/server.ts",
-    "build": "tsc -p .",
     "test": "npm run docker:up && npm run prisma:migrate:test && dotenv -e .env.test jest -i --runInBand --detectOpenHandles --forceExit && npm run docker:down",
     "test:watch": "npm run docker:up && npm run prisma:migrate:test && dotenv -e .env.test jest --watch --runInBand --detectOpenHandles && npm run docker:down",
     "test:coverage": "jest --coverage",
     "prisma:generate": "npx prisma generate",
+    "prisma:migrate:prod": "dotenv -e .env.production prisma migrate deploy",
     "prisma:migrate:test": "dotenv -e .env.test prisma migrate deploy",
     "docker:up": "docker compose up -d && sleep 3",
     "docker:down": "docker compose down"
