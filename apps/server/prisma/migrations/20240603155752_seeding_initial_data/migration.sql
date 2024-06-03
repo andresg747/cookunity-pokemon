@@ -13,7 +13,7 @@ BEGIN
     INSERT INTO "public"."PokemonCard" ("id", "name", "hp", "types", "baseDamage") VALUES
     ('ex14-68', 'Treecko δ', 40, '{Psychic}', 10),
     ('si1-3', 'Onix', 90, '{Fighting}', 40),
-    ('sm11-55', 'Pikachu asd', 60, '{Lightning}', 20),
+    ('sm11-55', 'Pikachu', 60, '{Lightning}', 20),
     ('sm8-126', 'Scizor', 120, '{Metal}', 60),
     ('sv2-133', 'Sneasel', 70, '{Darkness}', 20),
     ('sv5-41', 'Feraligatr', 180, '{Water}', 160),
