@@ -2,7 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchCards = async () => {
-  const { data } = await axios.get("http://localhost:3001/api/cards/");
+  // Make sure you have the NEXT_PUBLIC_SERVER_API_URL environment variable set!
+  const { data } = await axios.get(
+    `http://${process.env.NEXT_PUBLIC_SERVER_API_URL}/api/cards/`
+  );
   return data;
 };
 
