@@ -63,7 +63,7 @@ It is a Node.js server that uses Express.js to create the API endpoints and Pris
 
 ### How to run the server
 
-1. In a new terminal window, run the command `npm run dev` in the `app/server` folder
+1. In a new terminal window, run the command `npm run dev` in the `apps/server` folder
 2. Wait for the server to start
 3. The server will be running on `http://localhost:3001`
 
@@ -84,7 +84,7 @@ This test suite is designed to test the API endpoints of the server. It uses a t
 
 ### How to run the tests
 
-1. Run the command `npm run test` in the `app/server` folder
+1. Run the command `npm run test` in the `apps/server` folder
 2. Wait for the tests to finish
 3. Check the results in the terminal
 
@@ -94,6 +94,6 @@ The client is a `Next.js` application that uses `React` to create the UI compone
 
 ### How to run the client
 
-1. In a new terminal window, run the command `npm run dev` in the `app/client` folder
+1. In a new terminal window, run the command `npm run dev` in the `apps/client` folder
 2. Wait for the client to start
 3. The client will be running on `http://localhost:3000`
