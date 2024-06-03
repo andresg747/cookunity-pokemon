@@ -14,7 +14,7 @@
 
 ## Description
 
-This is a full-stack application that uses Node.js, Express.js, Prisma, PostgreSQL, React, and Next.js, configured as monorepo using Microsoft's Rush.
+This is a full-stack application that uses Node.js, Express.js, Prisma, PostgreSQL, and Next.js (React), configured as monorepo using Microsoft's Rush.
 
 The server is a REST API that interacts with a PostgreSQL database using Prisma. The client is a Next.js application that fetches data from the server and displays it in the UI.
 
@@ -30,7 +30,7 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 
 - Client:
   - List all Pokemon
-  - Filter Pokemon by name and type in the client
+  - Filter Pokemon by name and type
   - Select a Pokemon to view its details
   - Battle mode to simulate a battle between two Pokemon
 
@@ -47,6 +47,8 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 1. Clone the repository
 2. Navigate to the `app` folder
 3. Run the command `rush install && rush build`
+
+> Note: For simplicity, the .env.* files are included in the repository. In a production environment, these files should be kept secret.
 
 #### Troubleshooting
 
