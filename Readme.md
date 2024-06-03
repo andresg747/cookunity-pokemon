@@ -36,6 +36,7 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 - Pokemon battle simulation
 - Swagger documentation for API endpoints
 - Unit / Integration tests for API endpoints and utility functions
+- Filter Pokemon by name and type in the client
 
 ## Requirements
 

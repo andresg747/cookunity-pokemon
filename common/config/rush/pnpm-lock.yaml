@@ -8,7 +8,6 @@ importers:
   ../../apps/client:
     specifiers:
       '@ag-cookunity/types': workspace:*
-      '@radix-ui/react-dialog': ^1.0.5
       '@radix-ui/react-select': ^2.0.0
       '@radix-ui/react-slot': ^1.0.2
       '@tanstack/react-query': ~5.40.0
@@ -33,7 +32,6 @@ importers:
       vaul: ^0.9.1
     dependencies:
       '@ag-cookunity/types': link:../types
-      '@radix-ui/react-dialog': 1.0.5_ma437sazqanxqsgjws34kond6i
       '@radix-ui/react-select': 2.0.0_ma437sazqanxqsgjws34kond6i
       '@radix-ui/react-slot': 1.0.2_3vdbhqr2ncalcx7opnshezpx3q
       '@tanstack/react-query': 5.40.0_react@18.3.1

@@ -8,7 +8,7 @@ export type PokemonCard = {
   resistances: Resistance[];
 };
 
-enum PokemonCardType {
+export enum PokemonCardType {
   Darkness = "Darkness",
   Fighting = "Fighting",
   Fire = "Fire",

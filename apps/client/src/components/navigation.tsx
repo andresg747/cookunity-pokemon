@@ -1,13 +1,35 @@
 import Image from "next/image";
 import { Input } from "./ui/input";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FilterContext } from "@/hooks/context/filter";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { PokemonCardTypes } from "@/utils";
+import { Button } from "./ui/button";
 
 export default function Navigation() {
   const { filter, setFilter } = useContext(FilterContext);
+  const [isTypeSelectOpen, setIsTypeSelectOpen] = useState(false);
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
+  const handleNameFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilter({
+      ...filter,
+      name: event.target.value,
+    });
+  };
+
+  const handleTypeFilterChange = (value: string) => {
+    setFilter({
+      ...filter,
+      type: value,
+    });
   };
 
   return (
@@ -27,13 +49,51 @@ export default function Navigation() {
         </a>
       </div>
 
-      <div>
+      <div className="flex space-x-8">
         <Input
-          value={filter}
-          onChange={handleFilterChange}
-          placeholder="Search by name"
-          className="min-w-[300px]"
+          value={filter.name}
+          onChange={handleNameFilterChange}
+          placeholder="Filter by name"
+          className="min-w-[230px]"
         />
+        <Select
+          open={isTypeSelectOpen}
+          onOpenChange={setIsTypeSelectOpen}
+          onValueChange={handleTypeFilterChange}
+          value={filter.type}
+        >
+          <SelectTrigger className="w-[180px] min-w-[230px]">
+            <SelectValue placeholder="Filter by type" />
+          </SelectTrigger>
+          <SelectContent>
+            {filter.type && (
+              <Button
+                className="w-full px-2"
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFilter({
+                    ...filter,
+                    type: "",
+                  });
+                  setIsTypeSelectOpen(false);
+                }}
+              >
+                Clear
+              </Button>
+            )}
+            {PokemonCardTypes.map((type) => (
+              <SelectItem
+                key={type}
+                value={type}
+                className="font-semibold text-slate-700"
+              >
+                <span className="grow">{type}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </nav>
   );

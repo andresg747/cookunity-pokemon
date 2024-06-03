@@ -1,12 +1,18 @@
 import { createContext } from "react";
 
 interface ContextType {
-  filter: string;
-  setFilter: (filter: string) => void;
+  filter: {
+    name: string;
+    type: string;
+  };
+  setFilter: (filter: { name: string; type: string }) => void;
 }
 
 const initialContext: ContextType = {
-  filter: "",
+  filter: {
+    name: "",
+    type: "",
+  },
   setFilter: () => {},
 };
 

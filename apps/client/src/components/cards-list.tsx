@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import PokemonCardImage from "./card-image";
-import { PokemonCard } from "@ag-cookunity/types";
+import { PokemonCard, PokemonCardType } from "@ag-cookunity/types";
 import { useContext, useMemo } from "react";
 import { FilterContext } from "@/hooks/context/filter";
 
@@ -23,10 +23,17 @@ export default function CardList({
   const { filter } = useContext(FilterContext);
 
   const filteredCards = useMemo(() => {
+    if (!cards) return [];
     if (!filter) return cards;
-    return cards.filter((card) =>
-      card.name.toLowerCase().includes(filter.toLowerCase())
-    );
+    return cards
+      .filter((card) => {
+        if (!filter.type) return true;
+        return card.types.includes(filter.type as PokemonCardType);
+      })
+      .filter((card) => {
+        if (!filter.name) return true;
+        return card.name.toLowerCase().includes(filter.name.toLowerCase());
+      });
   }, [cards, filter]);
 
   if (isError) return <div>Error</div>;
