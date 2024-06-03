@@ -118,8 +118,12 @@ export class CardsController {
     next: NextFunction
   ): Promise<Response<any, Record<string, any>> | void> {
     try {
+      const { page = 1, limit = 10 } = req.query;
+
       const cards = await db.pokemonCard.findMany({
         include: includeWeaknessesAndResistances,
+        skip: (Number(page) - 1) * Number(limit),
+        take: Number(limit),
       });
       return res.json(cards);
     } catch (error) {
