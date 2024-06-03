@@ -32,9 +32,9 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  // const deleteCards = prisma.pokemonCard.deleteMany();
-  // await prisma.$transaction([deleteCards]);
-  // await prisma.$disconnect();
+  const deleteCards = prisma.pokemonCard.deleteMany();
+  await prisma.$transaction([deleteCards]);
+  await prisma.$disconnect();
 });
 
 describe("Cards API", () => {
@@ -122,14 +122,14 @@ describe("Cards API", () => {
   });
 
   // DELETE /api/cards/:id - Delete a card
-  // it("should delete a card", async () => {
-  //   const cardsListRequest = await request(app).get("/api/cards");
-  //   const cardId = cardsListRequest.body[0].id;
-  //   const res = await request(app).delete(`/api/cards/${cardId}`);
-  //   const cardsListRequestAfterDelete = await request(app).get("/api/cards");
+  it("should delete a card", async () => {
+    const cardsListRequest = await request(app).get("/api/cards");
+    const cardId = cardsListRequest.body[0].id;
+    const res = await request(app).delete(`/api/cards/${cardId}`);
+    const cardsListRequestAfterDelete = await request(app).get("/api/cards");
 
-  //   expect(cardsListRequestAfterDelete.body).toHaveLength(1);
-  //   expect(res.statusCode).toEqual(200);
-  //   expect(res.body).toHaveProperty("message");
-  // });
+    expect(cardsListRequestAfterDelete.body).toHaveLength(1);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("message");
+  });
 });
