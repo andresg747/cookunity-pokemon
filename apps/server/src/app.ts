@@ -24,7 +24,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://cookunity-pokemon-client.vercel.app",
+    ],
     credentials: true,
   })
 );
