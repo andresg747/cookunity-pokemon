@@ -37,7 +37,7 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/download/package-manager) `> v18.0.0`
+- [Node.js](https://nodejs.org/en/download/package-manager) `> v18.17.0`
 - [@microsoft/rush](https://rushjs.io/pages/intro/get_started/) v5.0.0
   - Install using `npm install -g @microsoft/rush`
 - [Docker](https://docs.docker.com/get-docker/)
