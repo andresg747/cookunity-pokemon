@@ -1,0 +1,11 @@
+services:
+  test-db:
+    image: postgres:13
+    restart: always
+    container_name: test-prisma
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: test-dbuser
+      POSTGRES_PASSWORD: test-dbpw
+      POSTGRES_DB: test-db

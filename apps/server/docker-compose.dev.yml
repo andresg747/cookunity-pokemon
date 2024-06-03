@@ -1,0 +1,11 @@
+services:
+  dev-db:
+    image: postgres:13
+    restart: always
+    container_name: dev-prisma
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: dev-dbuser
+      POSTGRES_PASSWORD: dev-dbpw
+      POSTGRES_DB: dev-db
