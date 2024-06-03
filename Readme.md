@@ -46,8 +46,8 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 
 1. Clone the repository: 
     - `git clone https://github.com/andresg747/cookunity-pokemon.git`
-2. Navigate to the app folder:
-    - `cd cookunity-pokemon/app`
+2. Navigate to the apps folder:
+    - `cd cookunity-pokemon/apps`
 3. Install dependencies and build the project:
     - `rush install && rush build`
 
