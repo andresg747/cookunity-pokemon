@@ -1,5 +1,5 @@
 <div align="center">
-   <h2 class="rebrand text-slick center small" style="
+   <div class="rebrand text-slick center small" style="
     justify-content: center;
     font-size: 36px;
     line-height: 60px;
@@ -11,7 +11,7 @@
     ">
    <img src="https://cu-landings-web-assets.imgix.net/assets/icons/slick-yellow.png" style="width: 96px;height: 56px;">
    <span style="margin-left: 0;text-align: center;position: absolute;color: #000;height: unset;">Pokemon App</span>
-   </h2>
+   </div>
 </div>
    <br>
 <div align="center">
