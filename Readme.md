@@ -1,4 +1,4 @@
-<h3 align="center">
+<div align="center">
    <h2 class="rebrand text-slick center small" style="
     justify-content: center;
     font-size: 36px;
@@ -12,6 +12,7 @@
    <img src="https://cu-landings-web-assets.imgix.net/assets/icons/slick-yellow.png" style="width: 96px;height: 56px;">
    <span style="margin-left: 0;text-align: center;position: absolute;color: #000;height: unset;">Pokemon App</span>
    </h2>
+</div>
    <br>
 <div align="center">
     <img src="https://img.shields.io/badge/Node.js-20.13.1-green" alt="Node.js version">
@@ -20,7 +21,7 @@
     <img src="https://img.shields.io/badge/Prisma-5.14.0-blue" alt="Prisma version">
     <img src="https://img.shields.io/badge/PostgreSQL-16.3-blue" alt="PostgreSQL version">
     <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4%EF%B8%8F%20%20-by%20AG-ffc84e" alt="Made with love by AG">
-    </div>
+</div>
 
 ## Description
 
