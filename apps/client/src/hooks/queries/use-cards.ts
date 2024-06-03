@@ -4,7 +4,7 @@ import axios from "axios";
 const fetchCards = async () => {
   // Make sure you have the NEXT_PUBLIC_SERVER_API_URL environment variable set!
   const { data } = await axios.get(
-    `http://${process.env.NEXT_PUBLIC_SERVER_API_URL}/api/cards/`
+    `${process.env.NEXT_PUBLIC_SERVER_API_URL}/api/cards/`
   );
   return data;
 };
