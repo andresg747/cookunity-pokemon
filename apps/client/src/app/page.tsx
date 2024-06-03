@@ -23,7 +23,7 @@ const SOUND_COOKIE_NAME = "mute-sound";
 
 function HomePageComponent() {
   const [cookies, setCookie] = useCookies([SOUND_COOKIE_NAME]);
-  const [mute, setMute] = useState(cookies[SOUND_COOKIE_NAME]);
+  const [mute, setMute] = useState(cookies[SOUND_COOKIE_NAME] || false);
 
   const [battleOutcome, setBattleOutcome] = useState<
     | {
