@@ -78,6 +78,8 @@ This test suite is designed to test the API endpoints of the server. It uses a t
 
 ### How it works
 
+The `test` script will:
+
 1. Create a test docker using .env.test with a new PostgreSQL DB
 2. Run the prisma migrate command to create the tables in the new DB
 3. Run the tests using jest and supertest
