@@ -21,6 +21,7 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 ## Features
 
 - API:
+
   - Create, Read, Update, and Delete Pokemon
   - List all Pokemon with pagination
   - List Pokemon weaknesses and resistances
@@ -34,7 +35,6 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
   - Select a Pokemon to view its details
   - Battle mode to simulate a battle between two Pokemon
 
-
 ## Requirements
 
 - [Node.js](https://nodejs.org/en/download/package-manager) `> v18.17.0`
@@ -45,14 +45,14 @@ The server is a REST API that interacts with a PostgreSQL database using Prisma.
 
 ## Installation
 
-1. Clone the repository: 
-    - `git clone https://github.com/andresg747/cookunity-pokemon.git`
+1. Clone the repository:
+   - `git clone https://github.com/andresg747/cookunity-pokemon.git`
 2. Navigate to the apps folder:
-    - `cd cookunity-pokemon/apps`
-3. Install dependencies and build the project:
-    - `rush install && rush build`
+   - `cd cookunity-pokemon/apps`
+3. Install dependencies:
+   - `rush install`
 
-> Note: For simplicity, the .env.* files are included in the repository. In a production environment, these files should be kept secret.
+> Note: For simplicity, the .env.\* files are included in the repository. In a production environment, these files should be kept secret.
 
 #### Troubleshooting
 
